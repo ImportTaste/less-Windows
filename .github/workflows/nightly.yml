@@ -1,12 +1,6 @@
 name: nightly
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-  schedule:
-    - cron: '0 0 * * 1,3,5'
+on: workflow_dispatch
     
 jobs:
   checkver:
@@ -56,7 +50,7 @@ jobs:
 
   release:
     needs: [checkver, build]
-    if: ${{ github.event_name == 'push' || github.event_name == 'schedule' }}
+    if: ${{ github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     
     steps:
